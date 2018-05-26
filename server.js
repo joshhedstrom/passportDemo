@@ -13,9 +13,18 @@ const session      = require('express-session');
 
 const configDB = require('./config/connection.js');
 
+const Sequelize = require('sequelize');
+
+const db = new Sequelize({
+    database: 'passport_demo',
+    username: 'root',
+    dialect: 'mysql'
+});
+
+
 // mongoose.connect(configDB.url); // connect to our database
 
-// require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -34,5 +43,9 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(PORT);
-console.log('App listening on port: ', PORT);
+db.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
+});
+
