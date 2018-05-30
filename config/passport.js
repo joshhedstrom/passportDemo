@@ -1,4 +1,5 @@
 // config/passport.js
+const bcrypt = require('bcrypt-nodejs')
 
 // load all the things we need
 
@@ -14,12 +15,13 @@ const LocalStrategy = require('passport-local').Strategy;
 
 // load up the user model
 var User = sequelize.import('../app/models/user.js')
-console.log('>>>>>>>>>>>>>>>>function: ', User)
-// User.hello();
+
+User.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+}
 
 User.sync();
 
-// expose this function to our app using module.exports
 module.exports = function(passport) {
 
 // =========================================================================
@@ -126,3 +128,4 @@ module.exports = function(passport) {
         }));
 
 };
+
