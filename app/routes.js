@@ -27,8 +27,6 @@ module.exports = function(app, passport) {
     // =====================================
     // show the signup form
     app.get('/signup', function(req, res) {
-        console.log('HERE!!')
-
         // render the page and pass in any flash data if it exists
         res.render('signup.ejs', {
             message: req.flash('signupMessage')
