@@ -1,6 +1,3 @@
-var bcrypt = require('bcrypt-nodejs');
-
-
 const User = function(sequelize, DataTypes) {
     return sequelize.define('user', {
         localemail: DataTypes.STRING,
@@ -13,27 +10,19 @@ const User = function(sequelize, DataTypes) {
         googletoken: DataTypes.STRING,
         googleemail: DataTypes.STRING,
         googlename: DataTypes.STRING
-            // }
-
-        // ,
-        // instanceMethods: {
-        //     validPassword: function(password) {
-        //         return bcrypt.compareSync(password, this.localpassword);
-        //     }
-        // },
-        // getterMethods: {
-        //     someValue: function() {
-        //         return this.someValue;
-        //     }
-        // },
-        // setterMethods: {
-        //     someValue: function(value) {
-        //         this.someValue = value;
-        //     }
-
     });
 }
 
 
 
 module.exports = User;
+
+// getterMethods: {
+//     someValue: function() {
+//         return this.someValue;
+//     }
+// },
+// setterMethods: {
+//     someValue: function(value) {
+//         this.someValue = value;
+//     }
