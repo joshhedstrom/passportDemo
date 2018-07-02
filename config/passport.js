@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
 
-// load all the things we need
-
 const Sequelize = require('sequelize')
 
 const sequelize = new Sequelize({
@@ -19,9 +17,6 @@ User.generateHash = function(password) {
 }
 
 User.validPassword = function(password, localpassword) {
-    console.log('THIS:', this)
-    console.log('PASSWORD: ', password);
-    console.log('LOCAL PASSWORD: ', localpassword)
     return bcrypt.compareSync(password, localpassword)
 }
 
@@ -123,15 +118,13 @@ module.exports = function(passport) {
                     }
                 })
                 .then(function(user) {
-                    console.log('USER ', user.dataValues)
                     if (!user) {
                         console.log('not user')
                         done(null, false, req.flash('loginMessage', 'Unknown user'));
                     } else if (!User.validPassword(password, user.dataValues.localpassword)) {
                         console.log('Password is: ', password)
                         done(null, false, req.flash('loginMessage', 'Wrong password'));
-                    } else {
-                        console.log('done')
+                    } else if (User.validPassword(password, user.dataValues.localpassword)) {
                         done(null, user);
                         console.log('DONE ', done)
                     }
